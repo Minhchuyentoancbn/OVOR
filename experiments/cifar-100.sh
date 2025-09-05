@@ -19,7 +19,7 @@ REPEAT=3
 # OnePrompt with Virtual Outlier Regularization (16 epochs regular training and 4 epochs with regularization)
 python -u run.py --config $CONFIG --gpus $GPUID --repeat $REPEAT \
     --learner_type prompt --learner_name OnePrompt \
-    --prompt_param 10 40 10 --epochs 0 2 1
+    --prompt_param 10 40 10 --epochs 0 16 4
 
 # CODA-P
 #

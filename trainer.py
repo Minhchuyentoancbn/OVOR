@@ -22,6 +22,9 @@ class Trainer:
         self.logger.log(f"Number of learnable parameters: {self.learner.count_learnable_params()}")
 
     def run(self):
+
+        final_avg_acc = []
+
         for task in trange(self.num_task, desc='Task'):
             self.logger.task = task
             self.learner.subset_start = task * self.split_size
@@ -54,6 +57,9 @@ class Trainer:
                     forgetting.append(max_acc - cur_acc)
                     forgetting_til.append(max_acc_til - cur_acc_til)
             avg_acc = np.array(accs).mean()
+            final_avg_acc.append(avg_acc)
+            caa_acc = np.array(final_avg_acc).mean()
+
             self.logger.avg_acc.add(avg_acc)
             if task > 0:
                 avg_forget = np.array(forgetting).mean()
@@ -62,7 +68,7 @@ class Trainer:
                 self.logger.forgetting_til.add(avg_forget_til)
             self.logger.log(
                 f"Task {task+1}: Average acc {avg_acc:.4f}" + (
-                    f", Forgetting {avg_forget:.4f}, Forgetting-TIL {avg_forget_til:.4f}"
+                    f", Forgetting {avg_forget:.4f}, Forgetting-TIL {avg_forget_til:.4f} CAA {caa_acc:.4f}"
                     if task > 0 else ''
                 )
             )
