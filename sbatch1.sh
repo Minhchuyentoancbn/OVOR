@@ -20,4 +20,4 @@ conda activate /lustre/scratch/client/movian/research/users/vietdt11/prompt_cl/o
 cd /lustre/scratch/client/movian/research/users/vietdt11/prompt_cl/ovor
 
 
- bash experiments/cifar-100.sh
+ bash experiments/cub.sh

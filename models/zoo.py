@@ -437,7 +437,7 @@ class ViTZoo(nn.Module):
             del load_dict["head.weight"]
             del load_dict["head.bias"]
             zoo_model.load_state_dict(load_dict)
-            print(f"Loading {self.pretrained} from {dict_path} ...")
+            print(f"Loading pretrained from {dict_path} ...")
 
         # classifier
         self.last = nn.Linear(768, num_classes)
