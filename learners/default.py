@@ -10,32 +10,6 @@ from .ood import NPOS
 from utils.schedulers import CosineSchedule
 
 
-from calflops import calculate_flops
-class Wrapper(nn.Module):
-    def __init__(self, model, train=True, warmup=False):
-        super().__init__()
-        self.model = model
-        self.training = train
-        self.warmup = warmup
-
-    def forward(self, x):
-        logits = self.model(
-            x, train=self.training, warmup=self.warmup
-        )
-        return logits  # FLOPs only care about computations, not which output you return
-
-# # Define a forward function for FLOPs calculation
-# wrapped_model = Wrapper(self.model, self.cls_mean)
-# # Get a tuple representing the shape of the input tensor
-# input_shape = inputs.shape
-# input_shape = tuple(input_shape)
-# input_shape = (1,) + input_shape[1:]  # Add batch dimension
-
-# flops, macs, params = calculate_flops(wrapped_model, input_shape, print_results=False, print_detailed=False)
-# print("FLOPs:", flops)
-# print("MACs:", macs)
-
-
 class NormalNN(nn.Module):
     def __init__(self, out_dim, args, logger):
         super().__init__()
@@ -145,27 +119,6 @@ class NormalNN(nn.Module):
             imgs = imgs.cuda()
             targets = targets.cuda()
             logits, prompt_loss = self.model(x=imgs, train=True, warmup=warmup)
-
-# # Define a forward function for FLOPs calculation
-# wrapped_model = Wrapper(self.model, self.cls_mean)
-# # Get a tuple representing the shape of the input tensor
-# input_shape = inputs.shape
-# input_shape = tuple(input_shape)
-# input_shape = (1,) + input_shape[1:]  # Add batch dimension
-
-# flops, macs, params = calculate_flops(wrapped_model, input_shape, print_results=False, print_detailed=False)
-# print("FLOPs:", flops)
-# print("MACs:", macs)
-
-            wrapped_model = Wrapper(self.model, train=True, warmup=warmup)
-            input_shape = imgs.shape
-            input_shape = tuple(input_shape)
-            input_shape = (1,) + input_shape[1:]  # Add batch dimension
-            flops, macs, params = calculate_flops(wrapped_model, input_shape, print_results=False, print_detailed=False)
-            print("FLOPs:", flops)
-            print("MACs:", macs)
-
-
             logits = logits[:, :self.subset_end]
             logits[:, :self.subset_start] = -float('inf')
             loss = self.criterion(logits, targets)
@@ -244,27 +197,6 @@ class NormalNN(nn.Module):
                 imgs = imgs.cuda()
                 targets = targets.cuda()
                 logits = self.model(x=imgs)[:, :end]
-
-
-# # Define a forward function for FLOPs calculation
-# wrapped_model = Wrapper(self.model, self.cls_mean)
-# # Get a tuple representing the shape of the input tensor
-# input_shape = inputs.shape
-# input_shape = tuple(input_shape)
-# input_shape = (1,) + input_shape[1:]  # Add batch dimension
-
-# flops, macs, params = calculate_flops(wrapped_model, input_shape, print_results=False, print_detailed=False)
-# print("FLOPs:", flops)
-# print("MACs:", macs)
-
-                input_shape = imgs.shape
-                input_shape = tuple(input_shape)
-                input_shape = (1,) + input_shape[1:]  # Add batch dimension
-                flops, macs, params = calculate_flops(self.model, input_shape, print_results=False, print_detailed=False)
-                print("FLOPs:", flops)
-                print("MACs:", macs)
-
-
                 logits[:, :start] = -float('inf')
                 correct += accuracy(logits, targets) * targets.size(0)
                 total += targets.size(0)
