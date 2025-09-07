@@ -161,6 +161,7 @@ class NormalNN(nn.Module):
             input_shape = imgs.shape
             input_shape = tuple(input_shape)
             input_shape = (1,) + input_shape[1:]  # Add batch dimension
+            print(type(wrapped_model))
             flops, macs, params = calculate_flops(wrapped_model, input_shape, print_results=False, print_detailed=False)
             print("FLOPs:", flops)
             print("MACs:", macs)
