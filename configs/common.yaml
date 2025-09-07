@@ -22,7 +22,7 @@ ood:
 workers: 4
 epochs:
 - 0
-- 50
+- 2
 - 0
 scheduler: cosine
 batch_size: 128
