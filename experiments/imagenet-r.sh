@@ -16,20 +16,28 @@ REPEAT=3
 #     --learner_type prompt --learner_name OnePrompt \
 #     --prompt_param 10 40 10
 
-# # OnePrompt with Virtual Outlier Regularization (40 epochs regular training and 10 epochs with regularization)
-# python -u run.py --config $CONFIG --gpus $GPUID --repeat $REPEAT \
-#     --learner_type prompt --learner_name OnePrompt \
-#     --prompt_param 10 40 10 --epochs 0 40 10
 
-# CODA-P
-#
-# prompt parameter args:
-#    arg 1 = prompt component pool size
-#    arg 2 = prompt length
-#    arg 3 = ortho penalty loss weight - with updated code, now can be 0!
-python -u run.py --config $CONFIG --gpus $GPUID --repeat $REPEAT \
-    --learner_type prompt --learner_name CODAPrompt \
-    --prompt_param 100 8 0.0
+# OnePrompt with Virtual Outlier Regularization (40 epochs regular training and 10 epochs with regularization)
+python -u run.py --config configs/imnet-r_prompt_long.yaml --gpus $GPUID --repeat $REPEAT \
+    --learner_type prompt --learner_name OnePrompt \
+    --prompt_param 20 40 10 --epochs 0 40 10
+
+
+# OnePrompt with Virtual Outlier Regularization (40 epochs regular training and 10 epochs with regularization)
+python -u run.py --config configs/imnet-r_prompt_short.yaml --gpus $GPUID --repeat $REPEAT \
+    --learner_type prompt --learner_name OnePrompt \
+    --prompt_param 5 40 10 --epochs 0 40 10
+
+
+# # CODA-P
+# #
+# # prompt parameter args:
+# #    arg 1 = prompt component pool size
+# #    arg 2 = prompt length
+# #    arg 3 = ortho penalty loss weight - with updated code, now can be 0!
+# python -u run.py --config $CONFIG --gpus $GPUID --repeat $REPEAT \
+#     --learner_type prompt --learner_name CODAPrompt \
+#     --prompt_param 100 8 0.0
 
 # # DualPrompt
 # #

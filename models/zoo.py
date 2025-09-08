@@ -424,20 +424,19 @@ class ViTZoo(nn.Module):
                                         num_heads=12, ckpt_layer=0,
                                         drop_path_rate=0
                                         )
-            # from timm.models import vit_base_patch16_224
-            # load_dict = vit_base_patch16_224(pretrained=True).state_dict()
-            # del load_dict['head.weight']; del load_dict['head.bias']
-            # zoo_model.load_state_dict(load_dict)
-
-
-            dict_path = (
-                "pretrained/vit_base_patch16_224_augreg_in21k.bin"  # with head
-            )
-            load_dict = torch.load(dict_path)
-            del load_dict["head.weight"]
-            del load_dict["head.bias"]
+            from timm.models import vit_base_patch16_224
+            load_dict = vit_base_patch16_224(pretrained=True).state_dict()
+            del load_dict['head.weight']; del load_dict['head.bias']
             zoo_model.load_state_dict(load_dict)
-            print(f"Loading pretrained from {dict_path} ...")
+
+            # dict_path = (
+            #     "pretrained/vit_base_patch16_224_augreg_in21k.bin"  # with head
+            # )
+            # load_dict = torch.load(dict_path)
+            # del load_dict["head.weight"]
+            # del load_dict["head.bias"]
+            # zoo_model.load_state_dict(load_dict)
+            # print(f"Loading pretrained from {dict_path} ...")
 
         # classifier
         self.last = nn.Linear(768, num_classes)
