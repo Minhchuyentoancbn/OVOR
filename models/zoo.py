@@ -449,7 +449,7 @@ class ViTZoo(nn.Module):
                 del ckpt[k]
             state_dict.update(ckpt)
             zoo_model.load_state_dict(state_dict)
-            print(f"Loading {self.pretrained} from {dict_path} ...")
+            print(f"Loading from {dict_path} ...")
 
         # classifier
         self.last = nn.Linear(768, num_classes)
