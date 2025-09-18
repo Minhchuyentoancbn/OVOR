@@ -439,10 +439,10 @@ class ViTZoo(nn.Module):
             # print(f"Loading pretrained from {dict_path} ...")
 
 
-            dict_path = "pretrained/dino_vitbase16_pretrain.pth"  # without head. blocks.0.att.qkv.weight
-            load_dict = torch.load(dict_path, map_location="cpu")
-            zoo_model.load_state_dict(load_dict)
-            print(f"Loading from {dict_path} ...")
+            # dict_path = "pretrained/dino_vitbase16_pretrain.pth"  # without head. blocks.0.att.qkv.weight
+            # load_dict = torch.load(dict_path, map_location="cpu")
+            # zoo_model.load_state_dict(load_dict)
+            # print(f"Loading from {dict_path} ...")
 
         # classifier
         self.last = nn.Linear(768, num_classes)
