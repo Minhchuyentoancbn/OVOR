@@ -439,16 +439,9 @@ class ViTZoo(nn.Module):
             # print(f"Loading pretrained from {dict_path} ...")
 
 
-            dict_path = "pretrained/ibot_vit_base16.pth"  # ['state_dict']
-            ckpt = torch.load(dict_path, map_location="cpu")[
-                "state_dict"
-            ]  # with nead
-            state_dict = zoo_model.state_dict()
-            not_in_k = [k for k in ckpt.keys() if k not in state_dict.keys()]
-            for k in not_in_k:
-                del ckpt[k]
-            state_dict.update(ckpt)
-            zoo_model.load_state_dict(state_dict)
+            dict_path = "pretrained/dino_vitbase16_pretrain.pth"  # without head. blocks.0.att.qkv.weight
+            load_dict = torch.load(dict_path, map_location="cpu")
+            zoo_model.load_state_dict(load_dict)
             print(f"Loading from {dict_path} ...")
 
         # classifier
