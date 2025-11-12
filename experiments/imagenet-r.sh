@@ -23,10 +23,16 @@ REPEAT=1
 #     --prompt_param 20 40 10 --epochs 0 40 10
 
 
+# # OnePrompt with Virtual Outlier Regularization (40 epochs regular training and 10 epochs with regularization)
+# python -u run.py --config configs/imnet-r_prompt_short.yaml --gpus $GPUID --repeat $REPEAT \
+#     --learner_type prompt --learner_name OnePrompt \
+#     --prompt_param 5 40 10 --epochs 0 40 10
+
+
 # OnePrompt with Virtual Outlier Regularization (40 epochs regular training and 10 epochs with regularization)
-python -u run.py --config configs/imnet-r_prompt_short.yaml --gpus $GPUID --repeat $REPEAT \
+python -u run.py --config configs/imnet-r_prompt_super_long.yaml --gpus $GPUID --repeat $REPEAT \
     --learner_type prompt --learner_name OnePrompt \
-    --prompt_param 5 40 10 --epochs 0 40 10
+    --prompt_param 50 40 10 --epochs 0 40 10
 
 
 # # CODA-P
